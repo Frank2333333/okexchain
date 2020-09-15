@@ -355,12 +355,13 @@ func TestRandomData(t *testing.T) {
 		}
 		res := handler(ctx, msg)
 		if !res.Code.IsOK() {
+			fmt.Println("msg:" + string(mapp.Cdc.MustMarshalJSON(msg)))
 			fmt.Println(mapp.tokenKeeper.GetCoins(ctx, addr))
 			swapTokenPair, err := mapp.swapKeeper.GetSwapTokenPair(ctx, types.TestSwapTokenPairName)
 			require.Nil(t, err)
 			fmt.Println(swapTokenPair)
 			fmt.Println("poolToken: " + keeper.GetPoolTokenAmount(ctx, swapTokenPair.PoolTokenName).String())
-			fmt.Println(res.Log)
+			fmt.Println("error log:" + res.Log)
 		}
 	}
 

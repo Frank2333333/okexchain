@@ -71,10 +71,10 @@ $ okexchaincli query swap pool eth-355
 func GetCmdQueryBuyAmount(queryRoute string, cdc *codec.Codec) *cobra.Command {
 	return &cobra.Command{
 		Use:   "amount [token-to-sell] [token-name-to-buy]",
-		Short: "Query how many token returned by the given amount of token to sell",
+		Short: "Query how many tokens returned by the given amount of “another” token to sell",
 		Long: strings.TrimSpace(
 			fmt.Sprintf(
-				`Query how many base token returned by the given amount of quote token.
+				`Query how many tokens returned by the given amount of “another” token to sell
 
 Example:
 $ %s query swap amount 100eth-245 xxb`, version.ClientName,
@@ -158,8 +158,11 @@ $ okexchaincli query swap pools
 			if err != nil {
 				return err
 			}
-
-			fmt.Println(string(res))
+			if res == nil || len(res) == 0 || string(res) == "null" {
+				fmt.Println("empty pools")
+			}else {
+				fmt.Println(string(res))
+			}
 			return nil
 		},
 	}
